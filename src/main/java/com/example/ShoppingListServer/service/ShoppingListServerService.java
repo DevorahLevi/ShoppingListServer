@@ -17,13 +17,12 @@ public class ShoppingListServerService
 
     public double insertShoppingList(ShoppingList shoppingList)
     {
-        HttpEntity<double []> httpEntity = new HttpEntity<>(shoppingList.getList());
+        HttpEntity<ShoppingList> httpEntity = new HttpEntity<>(shoppingList);
         ShoppingCalculatorResponse shoppingCalculatorResponse;
 
         try {
             shoppingCalculatorResponse = restTemplate.exchange("http://localhost:8081/api/v1/shoppingListCalculator/calculateListTotal",
                     HttpMethod.POST, httpEntity, ShoppingCalculatorResponse.class).getBody();
-            assert shoppingCalculatorResponse != null;
             return shoppingCalculatorResponse.getTotalPrice();
         } catch (RestClientException e) {
             System.out.println(e.getMessage());

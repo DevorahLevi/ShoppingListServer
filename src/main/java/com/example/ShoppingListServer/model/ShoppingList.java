@@ -1,14 +1,9 @@
 package com.example.ShoppingListServer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-@AllArgsConstructor
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Data
-@Builder
 public class ShoppingList
 {
     private double [] list;
