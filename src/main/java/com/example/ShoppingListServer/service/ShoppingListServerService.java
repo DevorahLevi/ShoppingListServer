@@ -5,7 +5,9 @@ import com.example.ShoppingListServer.model.ShoppingList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -21,12 +23,11 @@ public class ShoppingListServerService
         ShoppingCalculatorResponse shoppingCalculatorResponse;
 
         try {
-            shoppingCalculatorResponse = restTemplate.exchange("http://localhost:8081/api/v1/shoppingListCalculator/calculateListTotal",
-                    HttpMethod.POST, httpEntity, ShoppingCalculatorResponse.class).getBody();
-            return shoppingCalculatorResponse.getTotalPrice();
+            return restTemplate.exchange("http://localhost:8081/api/v1/shoppingListCalculator/calculateListTotal",
+                    HttpMethod.POST, httpEntity, ShoppingCalculatorResponse.class).getBody().getTotalPrice();
         } catch (RestClientException e) {
             System.out.println(e.getMessage());
-            return 0;
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST);
         }
     }
 }
